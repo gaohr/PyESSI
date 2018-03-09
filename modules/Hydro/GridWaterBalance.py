@@ -140,6 +140,7 @@ class CGridWaterBalance:
         ## 判断选择的方法 ##
         if util.config.PETMethod == util.defines.PET_REAL:
             self.m_dPET = gClimate_GridLayer.Pet[self.currow][self.curcol]
+            return 0
 
         if not os.path.exists(tmpmxPath + os.sep + curDate + '.tif') or not os.path.exists(
                                 tmpmnPath + os.sep + curDate + '.tif'):
@@ -186,8 +187,8 @@ class CGridWaterBalance:
             dRLong = debruin.NetLongWaveRadiationRHmd(self.m_slr, self.m_hmd)
             dRShort = debruin.NetShortWaveRadiation(dalbedo, self.m_slr)
             self.m_dPET = debruin.PETByDeBruin()
-        elif  util.config.PETMethod == util.defines.PET_REAL:
-            self.m_dPET = gClimate_GridLayer.Pet[self.currow][self.curcol]
+        # elif  util.config.PETMethod == util.defines.PET_REAL:
+        #     self.m_dPET = gClimate_GridLayer.Pet[self.currow][self.curcol]
         else:
             if not os.path.exists(slrPath + os.sep + curDate + '.tif') or not os.path.exists(
                                     hmdPath + os.sep + curDate + '.tif') or not os.path.exists(wndPath + os.sep + curDate + '.tif'):

@@ -161,9 +161,9 @@ class CHydroSimulate:
             self.wytype = dict(wyTypeTemps)
 
         ##模拟径流结果输出
-        self.outQ = open(util.config.workSpace + os.sep + 'Output' + os.sep + 'outQ.txt', 'a')
-        self.outQ.write("Date\tTotalQ\tSurfQ\tLatQ\tBaseQ\tDeepBaseQ\n")
-        self.outQ.close()
+        outQ = open(util.config.workSpace + os.sep + 'Output' + os.sep + 'outQ.txt', 'a')
+        outQ.write("Date\tTotalQ\tSurfQ\tLatQ\tBaseQ\tDeepBaseQ\n")
+        outQ.close()
 
         ##水文过程循环
         for theDay in daily:
@@ -228,7 +228,7 @@ class CHydroSimulate:
                     gOut_GridLayer.drateinf[row][col] = self.HortonInfil.m_dFt
 
                     self.gridwb.SetGridPara(row, col, dintensity, i, j, dhrIntensity, theDay)
-                    dalb = self.GetVegAlbedo(iMonth)
+                    dalb = self.GetVegAlbedo(row, col, iMonth)
                     self.gridwb.CalcPET(dalb, theDay)
 
                     if not self.g_StrahlerRivNet.data[row][col] == 0:
@@ -268,7 +268,7 @@ class CHydroSimulate:
                             self.gridwb.m_dAET = gClimate_GridLayer.Pet[row][col] * aetfactor
                             gOut_GridLayer.AET[row][col] = self.gridwb.m_dAET
                         else:
-                            self.gridwb.CalcAET(dalb, theDay)
+                            self.gridwb.CalcAET(theDay, dalb)
                             if self.gridwb.m_dAET > gClimate_GridLayer.Pet[row][col]:
                                 gOut_GridLayer.AET[row][col] = gClimate_GridLayer.Pet[row][col] * math.exp(
                                     -1 * gClimate_GridLayer.Pet[row][col] / self.gridwb.m_dAET)
@@ -633,12 +633,10 @@ class CHydroSimulate:
             dret = (dmin + 3 * dmin) / 2. + (3 * dmin - dmin) / 2 * sin(2 * math.pi * (dn - 82) / 365)
         return dret
 
-    def GetVegAlbedo(self, mon, day=1):
+    def GetVegAlbedo(self, row, col, mon, day=1):
         dret = 0.23
         if mon >= 1 or mon <= 12:
-            vegTemp = VegInfo(self.vegTypeName, self.vegFile)
-            vegTemp.ReadVegFile(self.vegTypeName[str(int(self.m_iVegOrd))] + '.veg')
-            dret = vegTemp.Albedo[mon - 1]
+            dret = gVeg_GridLayerPara.Veg[row][col].Albedo[mon - 1]
         return dret
 
     def ReadWaterYearType(self):

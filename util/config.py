@@ -16,11 +16,11 @@ workSpace = r'D:\GaohrWS\DoctorWorks\DoctorWork\PyESSI\DCBAM'
 mpiexeDir = r'"C:\Program Files\Microsoft MPI\Bin"'
 exeDir = None
 startTime = '19960101'  # 模拟起始日期
-endTime = '19960107'  # 模拟结束日期
+endTime = '19961231'  # 模拟结束日期
 
 # pyESSI GridIO File
 # [GridIO]
-DEMFileName = 'ylxdem240.tif'  # 原始DEM文件名
+DEMFileName = 'YLXDem240.tif'  # 原始DEM文件名
 LULCFileName = 'YLXLulc240.tif'  # LULC文件名
 SoilFileName = 'YLXSoil240.tif'  # Soil文件名
 outlet = "outlet.shp"  # 出水口shpfile
@@ -83,7 +83,7 @@ petdata = 1  # 潜在蒸散发数据
 # PyESSI Model MidGridOut Parameters
 # [MidGridOut]
 strOutBDate = '19960101'  # 中间结果输出起始日期
-strOutEDate = '19960107'  # 中间结果输出结束日期
+strOutEDate = '19961231'  # 中间结果输出结束日期
 
 iPcp = 0  # 降雨量
 iTempMax = 0  # 最高气温

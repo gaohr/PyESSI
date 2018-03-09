@@ -166,8 +166,6 @@ class CHydroSimulate:
         self.outQ.close()
 
         ##水文过程循环
-
-
         for theDay in daily:
             print('Calculating %s\t' % theDay, end='')
             s_long = time.clock()
@@ -224,6 +222,7 @@ class CHydroSimulate:
                     dhrIntensity = util.config.DailyMeanPcpTime
 
                     dintensity = gClimate_GridLayer.Pcp[row][col] / dhrIntensity
+
                     self.HortonInfil.SetGridPara(row, col, 0.03)
                     self.HortonInfil.HortonExcessRunoff()
                     gOut_GridLayer.drateinf[row][col] = self.HortonInfil.m_dFt
@@ -269,7 +268,7 @@ class CHydroSimulate:
                             self.gridwb.m_dAET = gClimate_GridLayer.Pet[row][col] * aetfactor
                             gOut_GridLayer.AET[row][col] = self.gridwb.m_dAET
                         else:
-                            self.gridwb.CalcAET(theDay, dalb)
+                            self.gridwb.CalcAET(dalb, theDay)
                             if self.gridwb.m_dAET > gClimate_GridLayer.Pet[row][col]:
                                 gOut_GridLayer.AET[row][col] = gClimate_GridLayer.Pet[row][col] * math.exp(
                                     -1 * gClimate_GridLayer.Pet[row][col] / self.gridwb.m_dAET)
@@ -368,11 +367,8 @@ class CHydroSimulate:
 
             self.RiverOutletQ_Hao(theDay, curorder - 1)
 
-
             e_long = time.clock()
             print("\ttime: %.3f" % (e_long - s_long))
-
-
 
         if util.config.RiverRouteMethod == util.defines.ROUTE_MUSKINGUM_COMBINE_FIRST or util.config.RiverRouteMethod == util.defines.ROUTE_MUSKINGUM_ROUTE_FIRST:
             if self.m_pX:
@@ -466,15 +462,12 @@ class CHydroSimulate:
                 writeRaster(filename, self.m_row, self.m_col, gOut_GridLayer.SoilAvgWater, self.g_DemLayer.geoTransform,
                             self.g_DemLayer.srs, self.g_DemLayer.noDataValue, gdal.GDT_Float32)
 
-
-
-
     def RiverOutletQ_Hao(self, curDay, curOrder):
-        self.outQ = open(util.config.workSpace + os.sep + 'Output' + os.sep + 'outQ.txt', 'a')
-        self.outQ.write("%s\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\n" % (
+        outQ = open(util.config.workSpace + os.sep + 'Output' + os.sep + 'outQ.txt', 'a')
+        outQ.write("%s\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\n" % (
         curDay, self.m_pOutletQ[curOrder], self.m_pOutletSurfQ[curOrder], self.m_pOutletLatQ[curOrder],
         self.m_pOutletBaseQ[curOrder], self.m_pOutletDeepBaseQ[curOrder]))
-        self.outQ.close()
+        outQ.close()
 
     # / *+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # +                                                        +

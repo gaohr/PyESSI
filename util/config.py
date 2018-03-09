@@ -12,7 +12,7 @@ Functions:
 
 #pyESSI Project Setup
 #[ProjectSetup]
-workSpace = r'D:\pyESSITest\DCBAM'
+workSpace = r'D:\GaohrWS\DoctorWorks\DoctorWork\PyESSI\DCBAM'
 mpiexeDir = r'"C:\Program Files\Microsoft MPI\Bin"'
 exeDir = None
 startTime = '19960101'  # 模拟起始日期
@@ -20,9 +20,9 @@ endTime = '19960107'  # 模拟结束日期
 
 # pyESSI GridIO File
 # [GridIO]
-DEMFileName = 'dem_filename.tif'  # 原始DEM文件名
-LULCFileName = 'lulc_filename.tif'  # LULC文件名
-SoilFileName = 'soil_filename.tif'  # Soil文件名
+DEMFileName = 'ylxdem240.tif'  # 原始DEM文件名
+LULCFileName = 'YLXLulc240.tif'  # LULC文件名
+SoilFileName = 'YLXSoil240.tif'  # Soil文件名
 outlet = "outlet.shp"  # 出水口shpfile
 
 # PyESSI Model Running Parameters

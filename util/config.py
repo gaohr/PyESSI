@@ -84,6 +84,7 @@ petdata = 1  # 潜在蒸散发数据
 # [MidGridOut]
 strOutBDate = '19960101'  # 中间结果输出起始日期
 strOutEDate = '19960107'  # 中间结果输出结束日期
+
 iPcp = 0  # 降雨量
 iTempMax = 0  # 最高气温
 iTempMin = 0  # 最低气温
